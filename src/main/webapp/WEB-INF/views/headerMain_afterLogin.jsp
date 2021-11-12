@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header class="header">
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="functions" uri="http://java.sun.com/jsp/jstl/functions" %> 
-<%
-// 세션값 가져오기
-String name = (String) session.getAttribute("NAME");
-String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");	
-
-%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+	<%@ taglib prefix="functions" uri="http://java.sun.com/jsp/jstl/functions"%>
+	<%
+		// 세션값 가져오기
+		String name = (String) session.getAttribute("NAME");
+		String profileImg = (String) session.getAttribute("PROFILE_IMAGE_PATH");
+	%>
 	<!-- Navbar-->
 	<nav class="navbar navbar-expand-lg shadow navbar-light bg-white" style="padding-bottom: 10px; padding-top: 10px;">
 		<div class="container-fluid">
@@ -34,28 +33,25 @@ String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
 					<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-secondary" href="listDistance.jsp">거리기준 식당 리스트</a></li>
 				</ul>
 				<form name="headerMain-afterLogin" id="headerMain-afterLogin" action="getLoginInfo.do">
-				<ul class="navbar-nav ms-auto">
-
-					<li class="nav-item  text-muted fw-bold pe-1 position-sticky"><strong style="color: navy;"><%=name %></strong>님</li>
-
-					<li class="nav-item dropdown ms-lg-3"><a id="userDropdownMenuLink" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="avatar avatar-sm avatar-border-white me-2" src="<%= profileImg %>" alt="">
-						</a>
-						
-						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuLink">
-							<a class="dropdown-item"  href="myPageMove.do">마이페이지</a> <!-- "myPageMove.do"를 이용해 마이페이지로 이동 -->
-							<a class="dropdown-item" href="user-grid.html">예약 내역 관리</a>
-							<a class="dropdown-item" href="user-booking-detail.html">내가 작성한 게시물</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="logout.do">
-								<i class="fas fa-sign-out-alt me-2 text-muted"></i> Sign out
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item  text-muted fw-bold pe-1 position-sticky"><strong style="color: navy;"><%=name%></strong>님</li>
+						<li class="nav-item dropdown ms-lg-3"><a id="userDropdownMenuLink" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="avatar avatar-sm avatar-border-white me-2" src="<%=profileImg%>" alt="">
 							</a>
-						</div></li>
-				</ul>
+							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuLink">
+								<a class="dropdown-item" href="myPageMove.do">마이페이지</a>
+								<!-- "myPageMove.do"를 이용해 마이페이지로 이동 -->
+								<a class="dropdown-item" href="user-grid.html">예약 내역 관리</a>
+								<a class="dropdown-item" href="user-booking-detail.html">내가 작성한 게시물</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout.do">
+									<i class="fas fa-sign-out-alt me-2 text-muted"></i> Sign out
+								</a>
+							</div></li>
+					</ul>
 				</form>
 			</div>
 		</div>
 	</nav>
-
 	<!-- /Navbar -->
 </header>

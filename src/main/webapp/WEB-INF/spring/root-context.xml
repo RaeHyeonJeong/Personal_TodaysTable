@@ -8,14 +8,12 @@
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
 			value="oracle.jdbc.OracleDriver"></property>
-		<property name="url"
-			value="jdbc:oracle:thin:@todaystable_medium?TNS_ADMIN=C://Users/wootk/git/team_todaysTable/src/main/webapp/resources/Wallet_TodaysTable/"></property>
+		<!-- <property name="url" value="jdbc:oracle:thin:@todaystable_medium?TNS_ADMIN=C://Users/a/git/Personal_TodaysTable/src/main/resources/Wallet_TodaysTable/"></property>
 		<property name="username" value="ADMIN"></property>
-		<property name="password" value="TodaysTable123"></property>
+		<property name="password" value="TodaysTable123"></property> -->
 
-		<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> 
-			<property name="username" value="C##APPLE"></property> <property name="password" 
-			value="1234"></property> -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> 
+		<property name="username" value="C##PERSONAL"></property> <property name="password" value="A1234"></property>
 	</bean>
 
 	<!-- SqlSessionFactory 객체 주입 -->

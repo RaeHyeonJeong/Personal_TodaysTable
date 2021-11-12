@@ -1,12 +1,10 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="functions" uri="http://java.sun.com/jsp/jstl/functions" %> 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="functions" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-// 세션값 가져오기
-String id = (String) session.getAttribute("id");
-
+	// 세션값 가져오기
+	String id = (String) session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,8 +76,8 @@ div.row2 { -
 							<div class="col-sm-9">
 								<br> <br>
 								<!--   테이블 형식으로 만들기 -->
- 								<!-- <form id="mypage" name="mypage" action="getPersonalInfo.do"> -->
- 								<div class="card-body">
+								<!-- <form id="mypage" name="mypage" action="getPersonalInfo.do"> -->
+								<div class="card-body">
 									<table class="table text-sm mb-0">
 										<tr>
 											<!-- ps-0-1 회원정보 테이블의 텍스트 가운데 정렬 css default에 추가 -->
@@ -107,11 +105,9 @@ div.row2 { -
 											<th class="ps-0-1">연락처</th>
 											<td class="pe-0-1">${list.tel }</td>
 										</tr>
-										
 										<tr>
 											<th class="ps-0-1">주소</th>
-											<td class="pe-0-1">${list.address }
-											</td>
+											<td class="pe-0-1">${list.address }</td>
 										</tr>
 									</table>
 								</div>

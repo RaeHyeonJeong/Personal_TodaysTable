@@ -6,16 +6,15 @@
 <header class="header">
 	<!-- Navbar-->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript">
- 
-        function fliterBtn(){
-	            if($('#filter_list').css('display') == 'none'){
-	            $('#filter_list').fadeIn(1000);
-	        }else{
-	            $('#filter_list').hide();
-	        }
-        }
-    </script>
+	<script type="text/javascript">
+		function fliterBtn() {
+			if ($('#filter_list').css('display') == 'none') {
+				$('#filter_list').fadeIn(1000);
+			} else {
+				$('#filter_list').hide();
+			}
+		}
+	</script>
 	<nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white" style="padding-bottom: 10px; padding-top: 10px;">
 		<div class="container-fluid">
 			<div class="d-flex align-items-center">
@@ -29,9 +28,8 @@
 				</div>
 				<button class="btn btn-sm btn-primary mx-1" onclick="location.href='#'" type="submit">search</button>
 				<button class="btn btn-primary h-100 inline-block" onclick="fliterBtn()" type="button" data-bs-toggle="collapse" data-bs-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters">
-							<i class="fas fa-filter me-1"></i>FILTER
+					<i class="fas fa-filter me-1"></i>FILTER
 				</button>
-				
 			</form>
 			<!-- 화면이 접혔을때 펼침 버튼 -->
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +56,10 @@
 		</div>
 	</nav>
 	<!-- /Navbar -->
-			<div id="filter_list" style="display: none;">
-			<br><br>
-			<div class="container d-flex justify-content-left">
+	<div id="filter_list" style="display: none;">
+		<br>
+		<br>
+		<div class="container d-flex justify-content-left">
 			<form action="#">
 				<div class="row">
 					<div class="search-bar rounded col-11 p-lg-4 px-4 py-4 position-relative mt-n5 z-index-20">
@@ -138,7 +137,6 @@
 											<input class="form-check-input" type="checkbox" id="cuisine_5" name="cuisine[]"> <label class="form-check-label" for="cuisine_5">외부 좌석</label>
 										</div>
 									</li>
-									
 								</ul>
 							</div>
 							<div class="row">
@@ -167,9 +165,9 @@
 					</div>
 				</div>
 			</form>
-			</div>
-			<br>
-			</div>
+		</div>
+		<br>
+	</div>
 </header>
 <%
 	} else {
@@ -212,7 +210,7 @@
 				</ul>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item dropdown ms-lg-3"><a id="userDropdownMenuLink" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="avatar avatar-sm avatar-border-white me-2" src="<%= profileImg %>" alt="">
+							<img class="avatar avatar-sm avatar-border-white me-2" src="<%=profileImg%>" alt="">
 						</a>
 						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuLink">
 							<a class="dropdown-item" href="myPageMove.do">마이페이지</a>

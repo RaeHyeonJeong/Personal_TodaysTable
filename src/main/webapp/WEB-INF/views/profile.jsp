@@ -1,14 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="functions"
-	uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="functions" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	// 세션값 가져오기
-String id = (String) session.getAttribute("id");
-String name = (String) session.getAttribute("NAME");
-String nickname = (String) session.getAttribute("nickname");
-String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
+	String id = (String) session.getAttribute("id");
+	String name = (String) session.getAttribute("NAME");
+	String nickname = (String) session.getAttribute("nickname");
+	String profileImg = (String) session.getAttribute("PROFILE_IMAGE_PATH");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,20 +20,15 @@ String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
 <!--  Price Slider Stylesheets -->
 <link rel="stylesheet" href="resources/vendor/nouislider/nouislider.css">
 <!-- Google fonts - Playfair Display-->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
 <!-- Google fonts - Poppins-->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
 <!-- swiper-->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
 <!-- Magnigic Popup-->
-<link rel="stylesheet"
-	href="resources/vendor/magnific-popup/magnific-popup.css">
+<link rel="stylesheet" href="resources/vendor/magnific-popup/magnific-popup.css">
 <!-- theme stylesheet-->
-<link rel="stylesheet" href="resources/css/style.default.css"
-	id="theme-stylesheet">
+<link rel="stylesheet" href="resources/css/style.default.css" id="theme-stylesheet">
 <!-- Custom stylesheet - for your changes-->
 <link rel="stylesheet" href="resources/css/custom.css">
 <!-- Favicon-->
@@ -45,10 +38,7 @@ String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 <!-- Font Awesome CSS-->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body style="padding-top: 72px;">
 	<!-- HEADER include -->
@@ -60,79 +50,48 @@ String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
 				<div class="col-md-8  d-flex justify-content-evenly">
 					<div class="w-100 py-5 px-md-5 px-xxl-6 position-relative">
 						<div class="card-header bg-gray-100 py-4 border-0 text-center">
-							<a class="d-inline-block" href="#"> <img
-								class="d-block avatar avatar-xxl p-2 mb-2"
-							src="<%=profileImg %>" alt=" ">
+							<a class="d-inline-block" href="#">
+								<img class="d-block avatar avatar-xxl p-2 mb-2" src="<%=profileImg%>" alt=" ">
 							</a>
 							<h5><%=name%></h5>
 							<p class="text-muted text-sm mb-0"><%=nickname%></p>
 						</div>
 					</div>
-					<form class="form-validate" action="updateProfile.do" method="POST"
-						enctype="multipart/form-data">
+					<form class="form-validate" action="updateProfile.do" method="POST" enctype="multipart/form-data">
 						<div class="mb-4">
 							<h2>Profile</h2>
-							<br> <br> <label class="form-label" for="password"
-								style="float: left;">새로운 비밀번호</label> <input
-								class="form-control" name="password1" id="password1"
-								placeholder="비밀번호 입력" type="password" required
-								data-msg="비밀번호를 입력해 주세요" onchange="chkPW()">
+							<br> <br> <label class="form-label" for="password" style="float: left;">새로운 비밀번호</label> <input class="form-control" name="password1" id="password1" placeholder="비밀번호 입력" type="password" required data-msg="비밀번호를 입력해 주세요" onchange="chkPW()">
 							<p>
-								<small style="color: red;">*특수문자, 대문자, 소문자, 숫자 조합 필수(8자리
-									이상)</small>
+								<small style="color: red;">*특수문자, 대문자, 소문자, 숫자 조합 필수(8자리 이상)</small>
 							</p>
 						</div>
 						<div class="mb-4">
-							<label class="form-label" for="password">새로운 비밀번호 재확인</label> <input
-								class="form-control" name="password" id="password"
-								placeholder="비밀번호 재입력" type="password">
+							<label class="form-label" for="password">새로운 비밀번호 재확인</label> <input class="form-control" name="password" id="password" placeholder="비밀번호 재입력" type="password">
 						</div>
 						<div>
-							<span id="no_pass"> <small
-								style="color: red; float: left;">비밀번호가 일치하지 않습니다.</small>
-							</span> <span id="ok_pass"> <small
-								style="color: blue; float: left;">비밀번호가 일치합니다.</small>
+							<span id="no_pass"> <small style="color: red; float: left;">비밀번호가 일치하지 않습니다.</small>
+							</span> <span id="ok_pass"> <small style="color: blue; float: left;">비밀번호가 일치합니다.</small>
 							</span>
 						</div>
 						<br>
 						<div class="mb-4">
-							<label class="form-label" for="tel">연락처</label> <br> <input
-								class="form-control" type="text" name="tel" id="tel"
-								placeholder="010-1234-5678" required data-msg="전화번호를 입력하세요">
+							<label class="form-label" for="tel">연락처</label> <br> <input class="form-control" type="text" name="tel" id="tel" placeholder="010-1234-5678" required data-msg="전화번호를 입력하세요">
 						</div>
 						<div class="mb-4">
-							<label class="form-label" for="address">주소</label><br> <input
-								class="form-control" style="width: 205px; float: left;"
-								name="postnum" id="postnum" placeholder="우편번호" type="text"
-								required data-msg="우편번호를 입력하세요."> <input
-								class="btn btn-primary" type="button" onclick="Postcode()"
-								value="우편번호 찾기"> <input class="form-control"
-								id="address1" placeholder="주소" type="text" required
-								data-msg="주소를 입력하세요"> <input class="form-control"
-								id="address2" placeholder="상세주소" type="text" required
-								data-msg="상세주소를 입력하세요"> <input class="form-control"
-								type="text" id="extraAddress"> <input
-								class="form-control" type="text" id="address" name="address" value="${list.address}">
+							<label class="form-label" for="address">주소</label><br> <input class="form-control" style="width: 205px; float: left;" name="postnum" id="postnum" placeholder="우편번호" type="text" required data-msg="우편번호를 입력하세요."> <input class="btn btn-primary" type="button" onclick="Postcode()" value="우편번호 찾기"> <input class="form-control" id="address1" placeholder="주소" type="text" required data-msg="주소를 입력하세요"> <input class="form-control" id="address2" placeholder="상세주소" type="text" required data-msg="상세주소를 입력하세요"> <input class="form-control" type="text" id="extraAddress"> <input class="form-control" type="text" id="address" name="address" value="${list.address}">
 						</div>
 						<div class="mb-4">
-							<label class="form-label" for="nickname"> 닉네임</label> <br> <input
-								class="form-control" style="width: 240px; float: left;"
-								name="nickname" id="nickname" value="${list.nickname}" type="text"
-								required data-msg="닉네임을 작성하세요">
-							<button type="button" class="btn btn-primary" id="nickCheck"
-								style="float: right;">중복확인</button>
+							<label class="form-label" for="nickname"> 닉네임</label> <br> <input class="form-control" style="width: 240px; float: left;" name="nickname" id="nickname" value="${list.nickname}" type="text" required data-msg="닉네임을 작성하세요">
+							<button type="button" class="btn btn-primary" id="nickCheck" style="float: right;">중복확인</button>
 							<div>
-								<span id="ok_nick"> <small
-									style="color: blue; float: left;">사용가능한 닉네임 입니다.</small>
-								</span> <span id="no_nick"> <small
-									style="color: red; float: left;">이미 존재하는 닉네임 입니다.</small>
+								<span id="ok_nick"> <small style="color: blue; float: left;">사용가능한 닉네임 입니다.</small>
+								</span> <span id="no_nick"> <small style="color: red; float: left;">이미 존재하는 닉네임 입니다.</small>
 								</span>
 							</div>
 						</div>
 						<br>
 						<div class="mb-4">
-							<br> <br> <label class="form-label" for="myPageMove.do">프로필</label><br>
-							<input type="file" id="file" name="file" style="float: left;">
+							<br> <br> <label class="form-label" for="myPageMove.do">프로필</label><br> <input type="file" id="file" name="file" style="float: left;">
 						</div>
 						<br>
 						<div class="d-grid gap-2">
@@ -181,26 +140,21 @@ String profileImg=(String)session.getAttribute("PROFILE_IMAGE_PATH");
 	<!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Magnific Popup - Lightbox for the gallery-->
-	<script
-		src="resources/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+	<script src="resources/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<!-- Smooth scroll-->
-	<script
-		src="resources/vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
+	<script src="resources/vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
 	<!-- Bootstrap Select-->
-	<script
-		src="resources/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="resources/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
 	<!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
 	<script src="resources/vendor/object-fit-images/ofi.min.js"></script>
 	<!-- Swiper Carousel                       -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
 	<script>
 		var basePath = ''
 	</script>
 	<!-- Main Theme JS file    -->
 	<script src="resources/js/theme.js"></script>
-	<script
-		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     function Postcode() {
         new daum.Postcode({
