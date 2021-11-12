@@ -16,6 +16,14 @@
 				document.location.href = '/controller/bookStore.do';
 			else if (this.id == 'btn3')
 				document.location.href = '/controller/review.do';
+			else if (this.id == 'btn5')
+				document.location.href = '/controller/mapone.do';
+			else if (this.id == 'btn6')
+				document.location.href = '/controller/maptwo.do';
+			else if (this.id == 'btn7')
+				document.location.href = '/controller/mapthree.do';
+			else if (this.id == 'btn8')
+				document.location.href = '/controller/mapfour.do';
 		});
 	});
 </script>
@@ -26,6 +34,11 @@
 	<button id="btn2">예약 페이지</button>
 	<button id="btn3">리뷰 페이지</button>
 	<button id="btn4">개인정보</button>
-
+	
+	<button id="btn5">지도1 페이지</button>
+	<button id="btn6">지도2 페이지</button>
+	<button id="btn7">지도3 페이지</button>
+	<button id="btn8">지도4 페이지</button>
 </body>
+
 </html>
