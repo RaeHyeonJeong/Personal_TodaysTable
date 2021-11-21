@@ -6,19 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.todaysTable.dao.NoticeBoardDao;
+import com.todaysTable.dao.BoardDao;
 import com.todaysTable.func.AjaxFileUploader;
-import com.todaysTable.func.FileUploader;
 import com.todaysTable.vo.NoticeBoardImageVO;
 import com.todaysTable.vo.NoticeBoardVO;
 
 @Service
-public class NoticeBoardServiceImpl implements NoticeBoardService {
+public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, NoticeBoardImageVO> {
 
 	@Autowired
-	NoticeBoardDao dao;
+	BoardDao<NoticeBoardVO, NoticeBoardImageVO> dao;
 
 	@Autowired
 	AjaxFileUploader ajaxFileUploader;

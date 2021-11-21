@@ -10,7 +10,7 @@ import com.todaysTable.vo.NoticeBoardImageVO;
 import com.todaysTable.vo.NoticeBoardVO;
 
 @Repository
-public class NoticeBoardDaoImpl implements NoticeBoardDao {
+public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardImageVO> {
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
