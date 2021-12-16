@@ -55,11 +55,34 @@
 		(NOTICE_IMAGE_SEQ.NEXTVAL, NOTICE_SEQ.CURRVAL, #{VALUE})
 	</insert>
 
-	<select id="selectNoticeImage" parameterType="int" resultType="com.todaysTable.vo.NoticeBoardImageVO">
+	<select id="selectNoticeImage" parameterType="int"
+		resultType="com.todaysTable.vo.NoticeBoardImageVO">
 		SELECT IMAGE_PATH FROM NOTICE_IMAGE
-		WHERE NOTICE_NO = #{VALUE}
+		WHERE NOTICE_NO =
+		#{VALUE}
 	</select>
-	
+
+	<!-- 페이징 처리 boardList -->
+	<select id="selectListpaging" parameterType="int"
+		resultType="com.todaysTable.vo.NoticeBoardVO">
+		<![CDATA[ 
+		SELECT *
+		FROM(
+			SELECT /*+INDEX_DESC(A NOTICE_NO)*/ ROWNUM AS RNUM, A.*
+			FROM(
+				SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS,
+						TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, ADMIN_ID
+				FROM NOTICE
+				ORDER BY NOTICE_NO ASC
+			) A
+			WHERE ROWNUM <= 1000137
+		) B
+		WHERE B.RNUM >= 999991
+		ORDER BY NOTICE_NO DESC
+		]]>
+	</select>
+
+
 	<!-- RECOM_GOOD_REST TABLE SQL 쿼리 -->
 
 

@@ -72,5 +72,5 @@ public class BoardController {
 	public void deleteAllAjax(MultipartFile[] uploadFile) {
 		noticeService.deleteFileAll(uploadFile);
 	}
-
+	
 }

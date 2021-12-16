@@ -74,12 +74,12 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 			int endIndex = path.length();
 			path = path.substring(beginIndex, endIndex);
 			path = path.replace("\\\\", "/");
-			
+
 			list.get(i).setImage_path(path);
 		}
 
 		System.out.println("list 사이즈 " + list.size());
-		
+
 		return list;
 	}
 
@@ -102,7 +102,5 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 	public void deleteFileAll(MultipartFile[] uploadFile) {
 		ajaxFileUploader.deleteFlieAll(ajaxFileUploader.getListInstance());
 	}
-	
-	
 
 }
