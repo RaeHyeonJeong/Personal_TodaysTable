@@ -57,6 +57,19 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 	public List<NoticeBoardImageVO> selectNoticeBoardImage(int notice_no) {
 		return sqlSession.selectList("boardMapper.selectNoticeImage", notice_no);
 	}
+
+	// 페이징 처리 게시물 전체 리스트
+	@Override
+	public List<NoticeBoardVO> listPaging(int page){
+		if(page <= 0) {
+			page = 1;
+		}
+		page = (page - 1) * 10;
+		
+		return sqlSession.selectList("boardMapper.selectListpaging", 3);
+	}
+	
+	
 	
 	
 

@@ -2,9 +2,6 @@ package com.todaysTable.dao;
 
 import java.util.List;
 
-import com.todaysTable.vo.NoticeBoardImageVO;
-import com.todaysTable.vo.NoticeBoardVO;
-
 public interface BoardDao<T1, T2> {
 	public List<T1> selectAllBoard();
 	// 게시물 전체 목록
@@ -22,4 +19,7 @@ public interface BoardDao<T1, T2> {
 	//이미지 조회
 	public List<T2> selectNoticeBoardImage(int no);
 	 
+	// 페이징 처리 게시물 전체 목록
+	public List<T1> listPaging(int page) throws Exception;
+	
 }
