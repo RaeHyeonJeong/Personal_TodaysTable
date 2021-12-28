@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todaysTable.common.BoardPageMaker;
+import com.todaysTable.common.Pagination;
 import com.todaysTable.service.BoardService;
 import com.todaysTable.vo.NoticeBoardImageVO;
 import com.todaysTable.vo.NoticeBoardVO;
@@ -16,31 +18,37 @@ public class BoardController {
 
 	@Autowired
 	BoardService<NoticeBoardVO, NoticeBoardImageVO> noticeService;
-	
-	// BOARD 공통 메서드
+
+	// <페이징 처리> 게시물 리스트 + 해당 게시판 이동
+	@RequestMapping(value = "pagingNoticeBoard.do", method = RequestMethod.GET)
+	public String noticeBoardPagingListAction(Model model, Pagination pagination) {
+
+		BoardPageMaker boardPageMaker = new BoardPageMaker();
+		boardPageMaker.setPagination(pagination);
+		boardPageMaker.setTotalCount(noticeService.totalNoticeBoardList());
+
+		model.addAttribute("list", noticeService.pagingNoticeBoardList(pagination));
+		model.addAttribute("boardPageMaker", boardPageMaker);
+		return "WEB-INF/views/boardNotice";
+	}
+
+	// BOARD 게시물 작성 페이지 이동
 	@RequestMapping(value = "boardWriteMove.do")
 	public String writeBoardMoveAction() {
 		return "WEB-INF/views/boardWrite";
 	}
 
+	// BOARD 게시물 수정 페이지 이동
 	@RequestMapping(value = "boardUpdateMove.do")
 	public String updateBoardMoveAction(Model model, int notice_no) {
 		model.addAttribute("info", noticeService.detailNoticeBoard(notice_no));
 		return "WEB-INF/views/boardUpdate";
 	}
 
-	// NoticeBoard 메서드
-	@RequestMapping(value = "noticeBoard.do")
-	public String noticeBoardListAction(Model model) {
-		model.addAttribute("list", noticeService.noticeBoardList());
-		return "WEB-INF/views/boardNotice";
-	}
-
 	@RequestMapping(value = "insertNoticeBoard.do", method = RequestMethod.POST)
 	public String noticeBoardInsertAction(NoticeBoardVO vo) {
-
 		noticeService.insertNoticeBoard(vo);
-		return "redirect:/noticeBoard.do";
+		return "redirect:/pagingNoticeBoard.do";
 	}
 
 	@RequestMapping(value = "noticeBoardDetail.do", method = RequestMethod.GET)
@@ -60,7 +68,7 @@ public class BoardController {
 	@RequestMapping(value = "deleteNoticeBoard.do")
 	public String noticeBoardDeleteAction(int notice_no) {
 		noticeService.deleteNoticeBoard(notice_no);
-		return "redirect:/noticeBoard.do";
+		return "redirect:/pagingNoticeBoard.do";
 	}
 
 	@RequestMapping(value = "uploadImgAjax.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -72,5 +80,5 @@ public class BoardController {
 	public void deleteAllAjax(MultipartFile[] uploadFile) {
 		noticeService.deleteFileAll(uploadFile);
 	}
-	
+
 }

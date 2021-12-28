@@ -71,7 +71,7 @@
 					<c:forEach var="row" items="${list}">
 						<tr>
 							<th scope="row">${lastIndex}</th>
-							<td><a class="text-muted" href="noticeBoardDetail.do?notice_no=${row.notice_no}">${row.title}</a></td>
+							<td><a class="text-muted" href="noticeBoardDetail.do?notice_no=${row.notice_no}&prePage=${boardPageMaker.pagination.page}">${row.title}</a></td>
 							<td>관리자</td>
 							<td>${row.hits}</td>
 							<td>${row.reg_date}</td>
@@ -87,21 +87,39 @@
 	</div>
 	<div class="mb-5">
 		<!-- Pagination -->
-		<nav aria-label="Page navigation example">
+		<nav aria-label="Page navigation">
 			<ul class="pagination pagination-template d-flex justify-content-center">
-				<li class="page-item"><a class="page-link" href="#">
-						<i class="fa fa-angle-left"></i>
-					</a></li>
-				<li class="page-item active"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">
-						<i class="fa fa-angle-right"></i>
-					</a></li>
+				<!-- 첫 페이지 -->
+				<c:if test="${boardPageMaker.pagination.page != 1}">
+					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=1">
+							<i class="fa fa-angle-double-left"></i>
+						</a></li>
+				</c:if>
+				<!-- 이전 페이징 목록 -->
+				<c:if test="${boardPageMaker.prev}">
+					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.startPage - boardPageMaker.displayPageNum}">
+							<i class="fa fa-angle-left"></i>
+						</a></li>
+				</c:if>
+				<!-- 페이징 번호 목록-->
+				<c:forEach begin="${boardPageMaker.startPage }" end="${boardPageMaker.endPage }" var="idx">
+					<li <c:out value="${boardPageMaker.pagination.page == idx ?  'class=page-item active' : '' }"/>><a class="page-link" href="pagingNoticeBoard.do?page=${idx}">${idx }</a></li>
+				</c:forEach>
+				<!-- 다음 페이징 목록 -->
+				<c:if test="${boardPageMaker.next}">
+					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.endPage + 1}">
+							<i class="fa fa-angle-right"></i>
+						</a></li>
+				</c:if>
+				<!-- 마지막 페이지  -->
+				<c:if test="${boardPageMaker.pagination.page != boardPageMaker.totalEndPage}">
+					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.totalEndPage}">
+							<i class="fa fa-angle-double-right"></i>
+						</a></li>
+				</c:if>
 			</ul>
 		</nav>
 	</div>
-	>
 	<div class="row row-col-2 d-flex justify-content-center"></div>
 	<!-- Footer-->
 	<jsp:include page="footer.jsp" />
@@ -151,7 +169,7 @@
 	<script src="resources/js/theme.js"></script>
 	<!-- Price Slider-->
 	<script src="resources/vendor/nouislider/nouislider.min.js"></script>
-	<script>
+	<!-- <script>
 		var snapSlider = document.getElementById('slider-snap');
 
 		noUiSlider.create(snapSlider, {
@@ -170,6 +188,6 @@
 			snapValues[handle].innerHTML = values[handle];
 			inputValues[handle].value = values[handle];
 		})
-	</script>
+	</script> -->
 </body>
 </html>
