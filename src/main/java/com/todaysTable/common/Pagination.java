@@ -1,13 +1,11 @@
 package com.todaysTable.common;
 
-import lombok.Getter;
 import lombok.ToString;
 
-@Getter
 @ToString
 public class Pagination {
 	private int page; // 페이지 번호
-	private int perPageNum; // 페이지당 보여지는 개수
+	private int perPageNum; // 페이지에 표시할 게시물 개수
 	
 	// default 생성자 
 	public Pagination() {
@@ -24,16 +22,33 @@ public class Pagination {
 		this.page = page;
 	}
 	
+	// page Getter 
+		public int getPage() {
+			return page;
+		}
+	
 	// PerPageNum Setter
 	public void setPerPageNum(int perPageNum) {
-		if(perPageNum <= 0 || perPageNum > 100) {
-			this.perPageNum = 10;
-			return;
+		this.perPageNum = perPageNum;
+	}
+	
+	// PerPageNum Getter
+	public int getPerPageNum() {
+		return perPageNum;
+	}
+	
+	// 페이지별 마지막 게시물 계산
+	public int getEndBoardNum() {
+		return this.page * this.perPageNum ;
+	}
+	
+	// 페이지별 시작 게시물 계산
+	public int getStartBoardNum() {
+		if(page == 1) {
+			return this.page;
+		} else {
+			return (page-1) * perPageNum + 1;
 		}
 	}
 	
-	// 시작 페이지 계산
-	public int getPageStart() {
-		return (this.page - 1) * perPageNum;
-	}
 }

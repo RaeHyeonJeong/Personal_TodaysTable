@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.todaysTable.common.Pagination;
 import com.todaysTable.vo.NoticeBoardImageVO;
 import com.todaysTable.vo.NoticeBoardVO;
 
@@ -14,11 +15,6 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
-
-	@Override
-	public List<NoticeBoardVO> selectAllBoard() {
-		return sqlSession.selectList("boardMapper.selectAllNoticeBoard");
-	}
 
 	@Override
 	public void insertNoticeBoard(NoticeBoardVO vo) {
@@ -58,19 +54,16 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 		return sqlSession.selectList("boardMapper.selectNoticeImage", notice_no);
 	}
 
+	// 전체 게시물 개수
+	@Override
+	public int totalNoticeBoardList() {
+		return sqlSession.selectOne("boardMapper.totalNoticeList");
+	}
+
 	// 페이징 처리 게시물 전체 리스트
 	@Override
-	public List<NoticeBoardVO> listPaging(int page){
-		if(page <= 0) {
-			page = 1;
-		}
-		page = (page - 1) * 10;
-		
-		return sqlSession.selectList("boardMapper.selectListpaging", 3);
+	public List<NoticeBoardVO> pagingListAllBoard(Pagination pagination) {
+		return sqlSession.selectList("boardMapper.selectBoardListPaging", pagination);
 	}
-	
-	
-	
-	
 
 }
