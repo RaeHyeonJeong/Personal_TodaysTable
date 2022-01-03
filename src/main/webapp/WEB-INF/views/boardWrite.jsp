@@ -39,7 +39,7 @@
 	<section class="py-6 bg-gray-100">
 		<div class="container d-flex justify-content-center">
 			<div class="col-md-7 mb-5 mb-md-0">
-				<form class="form" id="BoardWriteUpdate-form" method="post" action="insertNoticeBoard.do" enctype="multipart/form-data">
+				<form class="form" id="BoardWriteUpdate-form" method="post" action="insertBoard.do" enctype="multipart/form-data">
 					<div class="controls">
 						<div class="form-group mb-4">
 							<label class="form-label" for="title">제목</label> <input class="form-control" type="text" name="title" id="title" placeholder="제목을 적어주세요" required="required" style="width: 500px;">

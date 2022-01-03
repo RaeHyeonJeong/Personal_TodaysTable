@@ -8,8 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.todaysTable.dao.BoardDao;
-import com.todaysTable.vo.NoticeBoardImageVO;
-import com.todaysTable.vo.NoticeBoardVO;
+import com.todaysTable.vo.QnABoardImageVO;
+import com.todaysTable.vo.QnABoardVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -19,7 +19,7 @@ import com.todaysTable.vo.NoticeBoardVO;
 public class PagingTest {
 	
 	@Autowired
-	BoardDao<NoticeBoardVO, NoticeBoardImageVO> testDao;
+	BoardDao<QnABoardVO, QnABoardImageVO> testDao;
 	
 	@Test
 	public void testListPaging() throws Exception {
@@ -37,14 +37,14 @@ public class PagingTest {
 		System.out.println("테스트 종료");*/
 		
 		// 더미 데이터 생성 
-		/*for( int i = 44;  i <= 1000000; i++ ) {
-			NoticeBoardVO board= new NoticeBoardVO();
-			board.setTitle( 1000001+ "번째 더미데이터");
-			board.setContent(1000001+ "번째 더미데이터입니다.");
+		for( int i = 2;  i <= 30; i++ ) {
+			QnABoardVO board= new QnABoardVO();
+			board.setTitle( i+ "번째 질문");
+			board.setContent(i+ "번째 질문입니다.");
 			board.setPassword("1111");
 			
-			testDao.insertNoticeBoard(board);
-		}*/
+			testDao.insertBoard(board);
+		}
 		
 	}
 }

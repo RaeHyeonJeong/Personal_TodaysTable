@@ -10,14 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todaysTable.common.Pagination;
 import com.todaysTable.dao.BoardDao;
 import com.todaysTable.func.AjaxFileUploader;
-import com.todaysTable.vo.NoticeBoardImageVO;
-import com.todaysTable.vo.NoticeBoardVO;
+import com.todaysTable.vo.QnABoardImageVO;
+import com.todaysTable.vo.QnABoardVO;
 
 @Service
-public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, NoticeBoardImageVO> {
+public class QnABoardServiceImpl implements BoardService<QnABoardVO, QnABoardImageVO> {
 
 	@Autowired
-	BoardDao<NoticeBoardVO, NoticeBoardImageVO> dao;
+	BoardDao<QnABoardVO, QnABoardImageVO> dao;
 
 	@Autowired
 	AjaxFileUploader ajaxFileUploader;
@@ -25,7 +25,7 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 	// 게시판 종류 확인
 	@Override
 	public String getBoard() {
-		return "notice";
+		return "QnA";
 	}
 
 	// 전체 게시물 개수
@@ -36,13 +36,13 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 	// <페이징처리> 게시물 리스트
 	@Override
-	public List<NoticeBoardVO> pagingBoardList(Pagination pagination) {
+	public List<QnABoardVO> pagingBoardList(Pagination pagination) {
 		return dao.pagingListAllBoard(pagination);
 	}
 
 	// 게시물 등록
 	@Override
-	public void insertBoard(NoticeBoardVO vo) {
+	public void insertBoard(QnABoardVO vo) {
 
 		vo.setContent(vo.getContent().replace("\r\n", "<br>"));
 		dao.insertBoard(vo);
@@ -57,7 +57,7 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 	// 게시물 수정
 	@Override
-	public void updateBoard(NoticeBoardVO vo) {
+	public void updateBoard(QnABoardVO vo) {
 		vo.setContent(vo.getContent().replace("\r\n", "<br>"));
 		dao.updateBoard(vo);
 	}
@@ -70,8 +70,8 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 	// 게시물 내용 상세 이동
 	@Override
-	public NoticeBoardVO detailBoard(int notice_no) {
-		NoticeBoardVO vo = dao.deatilBoard(notice_no);
+	public QnABoardVO detailBoard(int notice_no) {
+		QnABoardVO vo = dao.deatilBoard(notice_no);
 		vo.setContent(vo.getContent().replace("<br>", "\r\n"));
 		return vo;
 	}
@@ -84,8 +84,8 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 	// 게시물 해당 이미지 조회
 	@Override
-	public List<NoticeBoardImageVO> selectBoardImage(int notice_no) {
-		List<NoticeBoardImageVO> list = dao.selectBoardImage(notice_no);
+	public List<QnABoardImageVO> selectBoardImage(int notice_no) {
+		List<QnABoardImageVO> list = dao.selectBoardImage(notice_no);
 
 		for (int i = 0; i < list.size(); i++) {
 			String path = list.get(i).getImage_path();
@@ -124,5 +124,7 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 	public void deleteFileAll(MultipartFile[] uploadFile) {
 		ajaxFileUploader.deleteFlieAll(ajaxFileUploader.getListInstance());
 	}
+	
+	
 
 }

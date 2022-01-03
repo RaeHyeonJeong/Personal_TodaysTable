@@ -71,7 +71,7 @@
 					<c:forEach var="row" items="${list}">
 						<tr>
 							<th scope="row">${lastIndex}</th>
-							<td><a class="text-muted" href="noticeBoardDetail.do?notice_no=${row.notice_no}&prePage=${boardPageMaker.pagination.page}">${row.title}</a></td>
+							<td><a class="text-muted" href="boardDetail.do?notice_no=${row.notice_no}&prePage=${boardPageMaker.pagination.page}">${row.title}</a></td>
 							<td>관리자</td>
 							<td>${row.hits}</td>
 							<td>${row.reg_date}</td>
@@ -83,7 +83,7 @@
 		</div>
 	</div>
 	<div class="mb-5 d-grid gap-2 col-6 mx-auto">
-		<button class="btn btn-primary h-100" onClick="location.href='boardWriteMove.do'">글쓰기</button>
+		<button class="btn btn-primary h-100" onClick="location.href='boardWriteMove.do?board=${board}'">글쓰기</button>
 	</div>
 	<div class="mb-5">
 		<!-- Pagination -->
@@ -91,29 +91,29 @@
 			<ul class="pagination pagination-template d-flex justify-content-center">
 				<!-- 첫 페이지 -->
 				<c:if test="${boardPageMaker.pagination.page != 1}">
-					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=1">
+					<li class="page-item"><a class="page-link" href="pagingBoard.do?board=${board}&page=1">
 							<i class="fa fa-angle-double-left"></i>
 						</a></li>
 				</c:if>
 				<!-- 이전 페이징 목록 -->
 				<c:if test="${boardPageMaker.prev}">
-					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.startPage - boardPageMaker.displayPageNum}">
+					<li class="page-item"><a class="page-link" href="pagingBoard.do?board=${board}&page=${boardPageMaker.startPage - boardPageMaker.displayPageNum}">
 							<i class="fa fa-angle-left"></i>
 						</a></li>
 				</c:if>
 				<!-- 페이징 번호 목록-->
 				<c:forEach begin="${boardPageMaker.startPage }" end="${boardPageMaker.endPage }" var="idx">
-					<li <c:out value="${boardPageMaker.pagination.page == idx ?  'class=page-item active' : '' }"/>><a class="page-link" href="pagingNoticeBoard.do?page=${idx}">${idx }</a></li>
+					<li <c:out value="${boardPageMaker.pagination.page == idx ?  'class=page-item active' : '' }"/>><a class="page-link" href="pagingBoard.do?board=${board}&page=${idx}">${idx }</a></li>
 				</c:forEach>
 				<!-- 다음 페이징 목록 -->
 				<c:if test="${boardPageMaker.next}">
-					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.endPage + 1}">
+					<li class="page-item"><a class="page-link" href="pagingBoard.do?board=${board}&page=${boardPageMaker.endPage + 1}">
 							<i class="fa fa-angle-right"></i>
 						</a></li>
 				</c:if>
 				<!-- 마지막 페이지  -->
 				<c:if test="${boardPageMaker.pagination.page != boardPageMaker.totalEndPage}">
-					<li class="page-item"><a class="page-link" href="pagingNoticeBoard.do?page=${boardPageMaker.totalEndPage}">
+					<li class="page-item"><a class="page-link" href="pagingBoard.do?board=${board}&page=${boardPageMaker.totalEndPage}">
 							<i class="fa fa-angle-double-right"></i>
 						</a></li>
 				</c:if>

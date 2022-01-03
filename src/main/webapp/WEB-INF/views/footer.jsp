@@ -18,8 +18,8 @@
 					<h6 class="text-uppercase text-dark mb-3">borad</h6>
 					<ul class="list-unstyled">
 						<li><a class="text-muted" href="index.html">맛집 추천 게시판</a></li>
-						<li><a class="text-muted" href="pagingNoticeBoard.do">공지사항</a></li>
-						<li><a class="text-muted" href="category-2-rooms.html">QnA</a></li>
+						<li><a class="text-muted" href="pagingBoard.do?board=notice">공지사항</a></li>
+						<li><a class="text-muted" href="pagingBoard.do?board=QnA">QnA</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-2 col-md-6 mb-5 mb-lg-0 mx-2">

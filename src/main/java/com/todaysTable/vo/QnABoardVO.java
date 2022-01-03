@@ -10,11 +10,12 @@ import lombok.ToString;
 public class QnABoardVO {
 	private int qna_no;
 	private int memb_no;
-	private String text_title;
-	private String text_content;
+	private String title;
+	private String content;
 	private String password;
 	private String reg_date;
 	private String admin_id;
+	private int hits;
 	private int ref;
 	private int step;
 	private int lev;

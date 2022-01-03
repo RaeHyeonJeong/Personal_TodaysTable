@@ -96,9 +96,9 @@
 	<div class="text-block"></div>
 	<div class="container">
 		<div class="py-3 d-grid gap-2 d-md-flex justify-content-md-end">
-			<button class="btn btn-primary h-100" onClick="location.href='boardUpdateMove.do?notice_no=${info.notice_no}'">수정하기</button>
-			<button class="btn btn-primary h-100" onClick="location.href='deleteNoticeBoard.do?notice_no=${info.notice_no}'">글 삭제</button>
-			<button class="btn btn-primary h-100" type="button" onclick="location.href='pagingNoticeBoard.do?page=${param.prePage}'">돌아가기</button>
+			<button class="btn btn-primary h-100" onClick="location.href='boardUpdateMove.do?notice_no=${info.notice_no}&prePage=${param.prePage}'">수정하기</button>
+			<button class="btn btn-primary h-100" onClick="location.href='deleteBoard.do?notice_no=${info.notice_no}'">글 삭제</button>
+			<button class="btn btn-primary h-100" type="button" onclick="location.href='pagingBoard.do?page=${param.prePage}'">돌아가기</button>
 		</div>
 	</div>
 	<!-- Footer-->
