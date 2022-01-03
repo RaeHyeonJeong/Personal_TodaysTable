@@ -5,17 +5,12 @@
 	<!-- NOTICE TABLE SQL 쿼리 -->
 
 	<!-- 페이징 이전 NOTICE BOARD 조회 쿼리 -->
-	<!-- <select id="selectAllNoticeBoard"
-		resultType="com.todaysTable.vo.NoticeBoardVO">
-		SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS,
-		TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, ADMIN_ID
-		FROM NOTICE
-		ORDER BY
-		NOTICE_NO DESC
-	</select> -->
+	<!-- <select id="selectAllNoticeBoard" resultType="com.todaysTable.vo.NoticeBoardVO"> 
+		SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS, TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, 
+		ADMIN_ID FROM NOTICE ORDER BY NOTICE_NO DESC </select> -->
 
-	<!-- 페이징 처리 boardList -->
-	<select id="selectBoardListPaging"
+	<!-- 페이징 처리 NoticeBoardList -->
+	<select id="selectNoticeBoardListPaging"
 		resultType="com.todaysTable.vo.NoticeBoardVO">
 		<![CDATA[ 
 		SELECT *
@@ -33,8 +28,9 @@
 	</select>
 
 	<!-- 총 게시물 개수 -->
-	<select id="totalNoticeList" resultType="Integer">
-		SELECT COUNT(*) FROM
+	<select id="totalNoticeBoardList" resultType="Integer">
+		SELECT COUNT(*)
+		FROM
 		NOTICE
 	</select>
 
@@ -72,8 +68,9 @@
 	</delete>
 
 	<!-- NOTICE TABEL 조회수 수정 -->
-	<update id="updateHits" parameterType="int">
-		UPDATE NOTICE SET
+	<update id="updateHitsNoticeBoard" parameterType="int">
+		UPDATE NOTICE
+		SET
 		HITS=HITS+1
 		WHERE NOTICE_NO = #{notice_no}
 	</update>
@@ -101,6 +98,17 @@
 
 
 	<!-- QNA TABLE SQL 쿼리 -->
+
+	<!-- QNA TABLE 게시물 등록 -->
+	<insert id="insertQnABoard"
+		parameterType="com.todaysTable.vo.QnABoardVO">
+		INSERT INTO QNA (QNA_NO, MEMB_NO, TITLE,
+		CONTENT,
+		PASSWORD, REG_DATE, ADMIN_ID, HITS,REF, STEP, LEV, PNUM,
+		REPLY)
+		VALUES(QNA_SEQ.NEXTVAL, 13, #{title}, #{content}, #{password},
+		SYSDATE, 'ADMIN', 0, 0, 0, 0 , 0, 0)
+	</insert>
 
 
 </mapper>

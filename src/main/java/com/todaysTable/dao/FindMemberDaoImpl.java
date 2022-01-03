@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FindMemberDaoImpl implements FindMemberDao{
+public class FindMemberDaoImpl implements FindMemberDao {
 	@Autowired
 	private SqlSessionTemplate st;
 
