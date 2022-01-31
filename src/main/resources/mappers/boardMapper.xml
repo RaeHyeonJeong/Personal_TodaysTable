@@ -2,22 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
-	<!-- NOTICE TABLE SQL 쿼리 -->
+	<!-- ***** 공통 사용 SQL 쿼리 ***** -->
 
-	<!-- 페이징 이전 NOTICE BOARD 조회 쿼리 -->
-	<!-- <select id="selectAllNoticeBoard" resultType="com.todaysTable.vo.NoticeBoardVO"> 
-		SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS, TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, 
-		ADMIN_ID FROM NOTICE ORDER BY NOTICE_NO DESC </select> -->
+	<!-- 사용자 MEMBER_NO 조회 -->
+	<select id="selectMemberNo" parameterType="String" resultType="int">
+		SELECT MEMB_NO
+		FROM MEMBER
+		WHERE ID = #{VALUE}
+	</select>
+
+	<!-- ***** NOTICE TABLE SQL 쿼리 ***** -->
 
 	<!-- 페이징 처리 NoticeBoardList -->
-	<select id="selectNoticeBoardListPaging"
-		resultType="com.todaysTable.vo.NoticeBoardVO">
+	<select id="selectNoticeBoardListPaging" resultType="java.util.Map">
 		<![CDATA[ 
 		SELECT *
 		FROM(
-			SELECT /*+INDEX_DESC(A PK_NOTICE)*/ ROWNUM AS RNUM, A.*
+			SELECT ROWNUM AS RNUM, A.*
 			FROM(
-				SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS,
+				SELECT /*+INDEX_DESC(NOTICE PK_NOTICE)*/ NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS,
 						TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, ADMIN_ID
 				FROM NOTICE
 			) A
@@ -27,7 +30,7 @@
 		]]>
 	</select>
 
-	<!-- 총 게시물 개수 -->
+	<!-- NOTICE TABLE 총 게시물 개수 -->
 	<select id="totalNoticeBoardList" resultType="Integer">
 		SELECT COUNT(*)
 		FROM
@@ -35,17 +38,17 @@
 	</select>
 
 	<!-- NOTICE TABLE 게시물 등록 -->
-	<insert id="insertNoticeBoard"
-		parameterType="com.todaysTable.vo.NoticeBoardVO">
-		INSERT INTO NOTICE (NOTICE_NO, TITLE, CONTENT, PASSWORD,
+	<insert id="insertNoticeBoard" parameterType="java.util.Map">
+		INSERT INTO NOTICE
+		(NOTICE_NO, TITLE, CONTENT, PASSWORD,
 		HITS, REG_DATE, ADMIN_ID)
 		VALUES(NOTICE_SEQ.NEXTVAL, #{title},
-		#{content}, #{password}, 0, SYSDATE, 'ADMIN')
+		#{content}, #{password}, 0,
+		SYSDATE, 'ADMIN')
 	</insert>
 
-	<!-- NOTICE TABLE 특정 게시물 조회 -->
-	<select id="selectNoticeBoard" parameterType="int"
-		resultType="com.todaysTable.vo.NoticeBoardVO">
+	<!-- NOTICE TABLE 게시물내용 조회 -->
+	<select id="selectNoticeBoard" parameterType="int" resultType="java.util.Map">
 		SELECT NOTICE_NO, TITLE, CONTENT, PASSWORD, HITS,
 		TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE, ADMIN_ID
 		FROM NOTICE
@@ -53,15 +56,16 @@
 		NOTICE_NO = #{notice_no}
 	</select>
 
-	<!-- NOTICE TABEL 특정 게시물 수정 -->
-	<update id="updateNoticeBoard"
-		parameterType="com.todaysTable.vo.NoticeBoardVO">
-		UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{content},
-		PASSWORD=#{password}, REG_DATE=SYSDATE
+	<!-- NOTICE TABEL 게시물 수정 -->
+	<update id="updateNoticeBoard" parameterType="java.util.Map">
+		UPDATE NOTICE SET
+		TITLE=#{title}, CONTENT=#{content},
+		PASSWORD=#{password},
+		REG_DATE=SYSDATE
 		WHERE NOTICE_NO = #{notice_no}
 	</update>
 
-	<!-- NOTICE TABEL 특정 게시물 삭제 -->
+	<!-- NOTICE TABEL 게시물 삭제 -->
 	<delete id="deleteNoticeBoard" parameterType="int">
 		DELETE FROM NOTICE
 		WHERE NOTICE_NO = #{notice_no}
@@ -83,32 +87,128 @@
 		(NOTICE_IMAGE_SEQ.NEXTVAL, NOTICE_SEQ.CURRVAL, #{VALUE})
 	</insert>
 
-	<!-- NOTICE TABEL 특정 게시물 이미지 조회 -->
-	<select id="selectNoticeImage" parameterType="int"
-		resultType="com.todaysTable.vo.NoticeBoardImageVO">
+	<!-- NOTICE TABEL 게시물 이미지 조회 -->
+	<select id="selectNoticeImage" parameterType="int" resultType="com.todaysTable.vo.NoticeBoardImageVO">
 		SELECT IMAGE_PATH FROM NOTICE_IMAGE
 		WHERE NOTICE_NO =
 		#{VALUE}
 	</select>
 
-	<!-- RECOM_GOOD_REST TABLE SQL 쿼리 -->
+	<!-- ***** QNA TABLE SQL 쿼리 ***** -->
 
+	<!-- 페이징 처리 QnABoardList -->
+	<select id="selectQnABoardListPaging" resultType="java.util.Map">
+		<![CDATA[ 
+		SELECT *
+		FROM(
+			SELECT ROWNUM AS RNUM, A.*
+			FROM(
+					SELECT  /*+USE_HASH(C) INDEX(D PK_MEMBER) INDEX_DESC(C PK_QNA)*/ C.*, D.NAME AS MEMB_NAME
+                    			FROM QNA C, MEMBER D
+                    			WHERE C.MEMB_NO = D.MEMB_NO
+			) A
+			WHERE ROWNUM <= #{endBoardNum}
+		) B
+		WHERE B.RNUM >= #{startBoardNum}
+		]]>
+	</select>
 
+	<!-- QNA TABLE 총 게시물 개수 -->
+	<select id="totalQnABoardList" resultType="Integer">
+		SELECT COUNT(*)
+		FROM
+		QNA
+	</select>
 
-
-
-	<!-- QNA TABLE SQL 쿼리 -->
+	<!-- QNA TABLE 게시물내용 조회 -->
+	<select id="selectQnABoard" parameterType="int" resultType="java.util.Map">
+		SELECT A.*, B.NAME AS WRITER
+		FROM (
+		SELECT QNA_NO, MEMB_NO,
+		TITLE, CONTENT, PASSWORD,
+		TO_CHAR(REG_DATE,'YYYY-MM-DD')REG_DATE,
+		HITS,
+		ADMIN_ID, REF, STEP, LEV, PNUM, REPLY
+		FROM QNA
+		WHERE QNA_NO = #{qna_no}
+		) A, MEMBER B
+		WHERE A.MEMB_NO =
+		B.MEMB_NO
+	</select>
 
 	<!-- QNA TABLE 게시물 등록 -->
-	<insert id="insertQnABoard"
-		parameterType="com.todaysTable.vo.QnABoardVO">
-		INSERT INTO QNA (QNA_NO, MEMB_NO, TITLE,
+	<insert id="insertQnABoard" parameterType="java.util.Map">
+		INSERT INTO QNA
+		(QNA_NO, MEMB_NO, TITLE,
 		CONTENT,
-		PASSWORD, REG_DATE, ADMIN_ID, HITS,REF, STEP, LEV, PNUM,
+		PASSWORD, REG_DATE, ADMIN_ID,
+		HITS,REF, STEP, LEV, PNUM,
 		REPLY)
-		VALUES(QNA_SEQ.NEXTVAL, 13, #{title}, #{content}, #{password},
+		VALUES(QNA_SEQ.NEXTVAL, #{memb_no},
+		#{title}, #{content}, #{password},
 		SYSDATE, 'ADMIN', 0, 0, 0, 0 , 0, 0)
 	</insert>
 
+	<!-- QNA TABEL 게시물 수정 -->
+	<update id="updateQnABoard" parameterType="java.util.Map">
+		UPDATE QNA SET
+		TITLE=#{title}, CONTENT=#{content},
+		PASSWORD=#{password},
+		REG_DATE=SYSDATE
+		WHERE QNA_NO = #{qna_no}
+	</update>
 
+	<!-- QNA TABEL 게시물 삭제 -->
+	<delete id="deleteQnABoard" parameterType="int">
+		DELETE FROM QNA
+		WHERE
+		QNA_NO = #{qna_no}
+	</delete>
+
+	<!-- QNA TABEL 조회수 수정 -->
+	<update id="updateHitsQnABoard" parameterType="int">
+		UPDATE QNA
+		SET
+		HITS=HITS+1
+		WHERE QNA_NO = #{qna_no}
+	</update>
+
+	<!-- QNA TABEL 이미지 등록 -->
+	<insert id="insertQnAImage" parameterType="String">
+		INSERT INTO
+		QNA_IMAGE(IMAGE_NO, QNA_NO, IMAGE_PATH)
+		VALUES
+		(QNA_IMAGE_SEQ.NEXTVAL,
+		QNA_SEQ.CURRVAL, #{VALUE})
+	</insert>
+
+	<!-- QNA TABEL 게시물 이미지 조회 -->
+	<select id="selectQnAImage" parameterType="int" resultType="com.todaysTable.vo.QnABoardImageVO">
+		SELECT IMAGE_PATH FROM QNA_IMAGE
+		WHERE QNA_NO = #{VALUE}
+	</select>
+
+	<!-- ***** 댓글 처리 SQL 쿼리 ***** -->
+
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectQnAReplyList" parameterType="int" resultType="java.util.Map">
+		SELECT * FROM QNA_REPLY
+		WHERE QNA_NO = #{VALUE}
+	</select>
+
+	<!-- 모댓글 생성 -->
+	<insert id="insertQnAReplyMain" parameterType="java.util.Map">
+		INSERT INTO QNA_REPLY
+		(
+		REPLY_NO, QNA_NO, REPLY_GROUP, GROUP_SEQ, DEPTH,
+		MEMB_NO, CONTENT, REG_DATE
+		)
+		VALUES
+		(
+		QNA_REPLY_SEQ.NEXTVAL, 266, QNA_REPLY_SEQ.CURRVAL, 0, 0, 13,
+		'댓글 작성 테스트', SYSDATE
+		);
+	</insert>
+	
+	
 </mapper>

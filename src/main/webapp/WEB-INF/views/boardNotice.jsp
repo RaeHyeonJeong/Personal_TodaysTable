@@ -68,13 +68,13 @@
 				</thead>
 				<tbody class="text-center text-break">
 					<c:set var="lastIndex" value="${function:length(list)}" />
-					<c:forEach var="row" items="${list}">
+					<c:forEach var="item" items="${list}">
 						<tr>
 							<th scope="row">${lastIndex}</th>
-							<td><a class="text-muted" href="boardDetail.do?notice_no=${row.notice_no}&prePage=${boardPageMaker.pagination.page}">${row.title}</a></td>
+							<td><a class="text-muted" href="boardDetail.do?board=${board}&board_no=${item.NOTICE_NO}">${item.TITLE}</a></td>
 							<td>관리자</td>
-							<td>${row.hits}</td>
-							<td>${row.reg_date}</td>
+							<td>${item.HITS}</td>
+							<td>${item.REG_DATE}</td>
 						</tr>
 						<c:set var="lastIndex" value="${lastIndex-1}" />
 					</c:forEach>

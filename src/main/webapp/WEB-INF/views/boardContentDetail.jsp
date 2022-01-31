@@ -54,7 +54,7 @@
 		<div class="container">
 			<div class="text-center pb-lg-4">
 				<p class="subtitle text-secondary">Title</p>
-				<h3 class="mb-4">${info.title}</h3>
+				<h3 class="mb-4">${info.TITLE}</h3>
 			</div>
 		</div>
 		<div class="container">
@@ -81,26 +81,76 @@
 		<div class="text-block d-flex">
 			<img class="avatar avatar-md p-1 flex-shrink-0 me-4" src="resources/img/avatar/avatar-10.jpg" alt="Jack London">
 			<p class="col">
-				<span class="text-muted text-uppercase text-sm">Write by </span> <br> <strong>관리자</strong>
+				<span class="text-muted text-uppercase text-sm">Write by </span> <br> <strong>${info.WRITER}</strong>
 			</p>
 			<p class="col">
-				<span class="text-muted text-sm"> 작성일 </span> <br> ${info.reg_date}
+				<span class="text-muted text-sm"> 작성일 </span> <br> ${info.REG_DATE}
 			</p>
 		</div>
 		<div class="text-block">
 			<div class="d-flex">
-				<p style="white-space: pre-line;" class="text-muted text-sm mb-2">${info.content}</p>
+				<p style="white-space: pre-line;" class="text-muted text-sm mb-2">${info.CONTENT}</p>
 			</div>
 		</div>
 	</div>
-	<div class="text-block"></div>
-	<div class="container">
+	<div class="container col-lg-7 mt-5">
+		<div class="text-block"></div>
 		<div class="py-3 d-grid gap-2 d-md-flex justify-content-md-end">
-			<button class="btn btn-primary h-100" onClick="location.href='boardUpdateMove.do?notice_no=${info.notice_no}&prePage=${param.prePage}'">수정하기</button>
-			<button class="btn btn-primary h-100" onClick="location.href='deleteBoard.do?notice_no=${info.notice_no}'">글 삭제</button>
-			<button class="btn btn-primary h-100" type="button" onclick="location.href='pagingBoard.do?page=${param.prePage}'">돌아가기</button>
+			<button class="btn btn-primary h-100" onClick="location.href='boardUpdateMove.do?board=${board}&board_no=${board_no}'">수정하기</button>
+			<button class="btn btn-primary h-100" onClick="location.href='deleteBoard.do?board=${board}&board_no=${board_no}'">글 삭제</button>
+			<button class="btn btn-primary h-100" type="button" onclick="history.go(-1)">돌아가기</button>
 		</div>
 	</div>
+	
+	<%-- <c:if test="${ board eq 'QnA'}">
+		<!-- Reply Start  -->
+		<div class="container col-lg-7">
+			<form class="form" id="postUpReplyMain" method="post" action="insertReplyMain.do?board=${board}" enctype="multipart/form-data">
+				<div class="py-3 d-grid gap-2 d-md">
+					<textarea class="form-control" style="resize: none;" rows="3" name="content" id="content" placeholder="Leave your comment" required="required"></textarea>
+					<button id="submit" class="btn btn-primary h-100">작성</button>
+				</div>
+			</form>
+		</div>
+		<div class="container col-lg-7 mt-5">
+			<h6>COMMENTS</h6>
+			<div id="replyList" class="text-block">
+				<!-- 반복 -->
+				<div class="d-flex review" style="padding-top: 7px; padding-bottom: 1px;">
+					<div class="row pb-2">
+						<div class="col-sm">
+							<img class="d-block avatar avatar-sm p-2 mb-2" src="resources/img/avatar/avatar-4.jpg" alt="Jabba Hut">
+							<span class="text-uppercase text-muted text-sm">2021.01.01</span>
+						</div>
+						<div class="col">
+							<h6 class="mt-2 mb-1">nickName</h6>
+							<p class="text-muted text-sm">contentcontentcontentcontentcontentcontentcontentcontentcontentcontent</p>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-end">
+					<div>
+						<p class="pe-2 pt-2 mb-0 text-muted text-sm">수정</p>
+					</div>
+					<div>
+						<p class="pe-2 pt-2 mb-0 text-muted text-sm">삭제</p>
+					</div>
+					<div data-bs-toggle="collapse" data-bs-target="#replyCollapse" aria-expanded="false" aria-controls="replyCollapse">
+						<p class="pe-2 pt-2 mb-0 text-muted text-sm">답글달기</p>
+					</div>
+				</div>
+				<div class="collapse" id="replyCollapse">
+					<form class="form" id="postUpReplySub" method="POST" enctype="multipart/form-data">
+						<div class="py-3 d-flex gap-2 justify-content-end">
+							<textarea class="form-control w-75" style="resize: none;" rows="1" name="content" id="content" placeholder="Leave your comment" required="required"></textarea>
+							<button id="submit" class="btn btn-primary h-100">등록</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</c:if> --%>
+	
 	<!-- Footer-->
 	<jsp:include page="footer.jsp" />
 	<!-- JavaScript files-->

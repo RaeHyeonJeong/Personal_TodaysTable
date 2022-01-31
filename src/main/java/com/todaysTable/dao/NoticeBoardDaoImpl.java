@@ -1,17 +1,18 @@
 package com.todaysTable.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.todaysTable.common.Pagination;
+import com.todaysTable.common.BoardCriteria;
 import com.todaysTable.vo.NoticeBoardImageVO;
 import com.todaysTable.vo.NoticeBoardVO;
 
 @Repository
-public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardImageVO> {
+public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardImageVO> {
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
@@ -24,20 +25,21 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 
 	// 페이징 처리 게시물 전체 리스트
 	@Override
-	public List<NoticeBoardVO> pagingListAllBoard(Pagination pagination) {
-		return sqlSession.selectList("boardMapper.selectNoticeBoardListPaging", pagination);
+	public List<Map<String, Object>> pagingListAllBoard(BoardCriteria boardCriteria) {
+		return sqlSession.selectList("boardMapper.selectNoticeBoardListPaging", boardCriteria);
+
 	}
 
 	// 게시물 등록
 	@Override
-	public void insertBoard(NoticeBoardVO vo) {
-		sqlSession.insert("boardMapper.insertNoticeBoard", vo);
+	public void insertBoard(Map<String, Object> paramMap) {
+		sqlSession.insert("boardMapper.insertNoticeBoard", paramMap);
 	}
 
 	// 게시물 수정
 	@Override
-	public void updateBoard(NoticeBoardVO vo) {
-		sqlSession.update("boardMapper.updateNoticeBoard", vo);
+	public void updateBoard(Map<String, Object> paramMap) {
+		sqlSession.update("boardMapper.updateNoticeBoard", paramMap);
 
 	}
 
@@ -50,7 +52,7 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 
 	// 게시물 상세 내용 조회
 	@Override
-	public NoticeBoardVO deatilBoard(int notice_no) {
+	public Map<String, Object> deatilBoard(int notice_no) {
 		return sqlSession.selectOne("boardMapper.selectNoticeBoard", notice_no);
 	}
 
@@ -71,6 +73,11 @@ public class NoticeBoardDaoImpl implements BoardDao<NoticeBoardVO, NoticeBoardIm
 	@Override
 	public List<NoticeBoardImageVO> selectBoardImage(int notice_no) {
 		return sqlSession.selectList("boardMapper.selectNoticeImage", notice_no);
+	}
+
+	// 사용자 memb_no 조회
+	public int selectMemberNumber(String id) {
+		return sqlSession.selectOne("boardMapper.selectMemberNo", id);
 	}
 
 }

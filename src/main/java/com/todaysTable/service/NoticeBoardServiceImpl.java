@@ -1,23 +1,25 @@
 package com.todaysTable.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todaysTable.common.Pagination;
+import com.todaysTable.common.BoardCriteria;
 import com.todaysTable.dao.BoardDao;
 import com.todaysTable.func.AjaxFileUploader;
 import com.todaysTable.vo.NoticeBoardImageVO;
-import com.todaysTable.vo.NoticeBoardVO;
 
 @Service
-public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, NoticeBoardImageVO> {
+public class NoticeBoardServiceImpl implements BoardService<NoticeBoardImageVO> {
 
 	@Autowired
-	BoardDao<NoticeBoardVO, NoticeBoardImageVO> dao;
+	BoardDao<NoticeBoardImageVO> dao;
 
 	@Autowired
 	AjaxFileUploader ajaxFileUploader;
@@ -36,16 +38,27 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 	// <페이징처리> 게시물 리스트
 	@Override
-	public List<NoticeBoardVO> pagingBoardList(Pagination pagination) {
-		return dao.pagingListAllBoard(pagination);
+	public List<Map<String, Object>> pagingBoardList(BoardCriteria boardCriteria) {	
+		List<Map<String, Object>> resultMap = dao.pagingListAllBoard(boardCriteria);
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+		
+		for(Map<String, Object> row : resultMap) {
+			date = (Date) row.get("REG_DATE");
+			row.put("REG_DATE",  format.format(date));
+		}
+		
+		return resultMap;
 	}
 
 	// 게시물 등록
 	@Override
-	public void insertBoard(NoticeBoardVO vo) {
+	public void insertBoard(Map<String, Object> paramMap, String id) {
 
-		vo.setContent(vo.getContent().replace("\r\n", "<br>"));
-		dao.insertBoard(vo);
+		String value = ((String)paramMap.get("content")).replace("\r\n", "<br>");;
+		paramMap.put("content", value);
+		
+		dao.insertBoard(paramMap);
 
 		ArrayList<String> list = ajaxFileUploader.getListInstance();
 		for (int i = 0; i < list.size(); i++) {
@@ -55,25 +68,15 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 		ajaxFileUploader.getListInstance().clear();
 	}
 
-	// 게시물 수정
-	@Override
-	public void updateBoard(NoticeBoardVO vo) {
-		vo.setContent(vo.getContent().replace("\r\n", "<br>"));
-		dao.updateBoard(vo);
-	}
-
-	// 게시물 삭제
-	@Override
-	public void deleteBoard(int notice_no) {
-		dao.deleteBoard(notice_no);
-	}
-
 	// 게시물 내용 상세 이동
 	@Override
-	public NoticeBoardVO detailBoard(int notice_no) {
-		NoticeBoardVO vo = dao.deatilBoard(notice_no);
-		vo.setContent(vo.getContent().replace("<br>", "\r\n"));
-		return vo;
+	public Map<String, Object> detailBoard(int notice_no) {		
+		Map<String, Object> paramMap = dao.deatilBoard(notice_no);
+		String value = ((String)paramMap.get("CONTENT")).replace("\r\n", "<br>");
+		paramMap.put("CONTENT", value);
+		paramMap.put("WRITER", "관리자");
+		
+		return paramMap;
 	}
 
 	// 조회수 증가
@@ -82,6 +85,22 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 		dao.updateHits(notice_no);
 	}
 
+	// 게시물 수정
+	@Override
+	public void updateBoard(Map<String, Object> paramMap) {
+		String value = ((String)paramMap.get("content")).replace("\r\n", "<br>");
+		paramMap.put("content", value);
+		paramMap.put("notice_no", paramMap.get("board_no"));
+		
+		dao.updateBoard(paramMap);
+	}
+
+	// 게시물 삭제
+	@Override
+	public void deleteBoard(int notice_no) {
+		dao.deleteBoard(notice_no);
+	}
+	
 	// 게시물 해당 이미지 조회
 	@Override
 	public List<NoticeBoardImageVO> selectBoardImage(int notice_no) {
@@ -97,9 +116,6 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 
 			list.get(i).setImage_path(path);
 		}
-
-		System.out.println("list 사이즈 " + list.size());
-
 		return list;
 	}
 
@@ -119,10 +135,10 @@ public class NoticeBoardServiceImpl implements BoardService<NoticeBoardVO, Notic
 		}
 	}
 
-	// 이미지 파일 삭제
+	// 이미지 파일 업로드 초기화
 	@Override
 	public void deleteFileAll(MultipartFile[] uploadFile) {
 		ajaxFileUploader.deleteFlieAll(ajaxFileUploader.getListInstance());
 	}
-
+	
 }
