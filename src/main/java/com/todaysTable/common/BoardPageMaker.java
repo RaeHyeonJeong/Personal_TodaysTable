@@ -13,10 +13,10 @@ public class BoardPageMaker {
 	
 	private int displayPageNum = 10; // 표시할 페이징 개수
 	
-	private  Pagination pagination;
+	private  BoardCriteria boardCriteria;
 	
-	public void setPagination(Pagination pagination) {
-		this.pagination = pagination;
+	public void setPagination(BoardCriteria boardCriteria) {
+		this.boardCriteria = boardCriteria;
 	}
 
 	public void setTotalCount(int totalCount) {
@@ -27,15 +27,22 @@ public class BoardPageMaker {
 	
 	// 전체 게시물에 대한 마지막 페이지 세팅
 	public void setTotalEndPage(int totalCount) {
-		this.totalEndPage = (int)(Math.ceil(totalCount / (double)pagination.getPerPageNum()));
+		// 총 개시물 개수 / boardCriteria< 현재 화면에 표시할 개시물 개수 >
+		this.totalEndPage = (int)(Math.ceil(totalCount / (double)boardCriteria.getPerPageNum()));
 	}
 	
 	// 페이지 데이터 계산
 	private void calcData() {
-		endPage = (int)(Math.ceil(pagination.getPage() / (double) displayPageNum) * displayPageNum); // 현재 마지막 페이징 번호
-		startPage = (endPage - displayPageNum) + 1; // 현재 시작 페이징 번호
+		// 현재 화면에서의 마지막 페이징 번호 
+		// = ( boardCriteria< 현재 페이지 번호 > / 표시할 페이징 개수 ) * 표시할 페이징 개수
+		endPage = (int)(Math.ceil(boardCriteria.getPage() / (double) displayPageNum) * displayPageNum); 
 		
-		if(endPage > totalEndPage) { // 마지막 페이징 번호 제한
+		// 현재 화면에서의 시작 페이징 번호 
+		// = (현재 화면에서의 마지막 페이징 번호 - 표시할 페이징 개수 ) + 1 
+		startPage = (endPage - displayPageNum) + 1; 
+		
+		// 마지막 페이징 번호 제한
+		if(endPage > totalEndPage) { 
 			endPage = totalEndPage;
 		}
 		

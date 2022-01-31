@@ -33,7 +33,7 @@ public class AjaxFileUploader {
 	public void uploadFile(MultipartFile file, String folderName, ArrayList<String> list) throws Exception {
 		
 		// 이미지 파일일 경우
-		String path = "C:\\TeamProject\\Team_todaysTable\\src\\main\\webapp\\resources\\img\\";
+		String path = "C:\\Users\\a\\git\\Personal_TodaysTable\\src\\main\\webapp\\resources\\img\\";
 		folderName = folderName + "\\";
 
 		// 파일명 중복 처리

@@ -32,8 +32,16 @@
 	<context:component-scan base-package="com.todaysTable.vo" />
 	<context:component-scan base-package="com.todaysTable.service" />
 	<context:component-scan base-package="com.todaysTable.func" />
+	<context:component-scan base-package="com.todaysTable.interceptor" />
 	
-
+	<!-- 인터셉터 설정 -->
+    	<interceptors>
+    		<interceptor>
+       		<mapping path="/boardWriteMove.do*"/>
+       		<beans:bean id="loginInterceptor" class="com.todaysTable.interceptor.LoginInterceptor" />
+    		</interceptor>
+    	</interceptors>
+	
 	<!-- 파일업로드 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

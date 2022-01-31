@@ -3,17 +3,17 @@ package com.todaysTable.common;
 import lombok.ToString;
 
 @ToString
-public class Pagination {
+public class BoardCriteria {
 	private int page; // 페이지 번호
 	private int perPageNum; // 페이지에 표시할 게시물 개수
 	
 	// default 생성자 
-	public Pagination() {
+	public BoardCriteria() {
 		this.page = 1;
 		this.perPageNum = 10;
 	}
 	
-	// page Setter
+	// 페이지 번호 Setter
 	public void setPage(int page) {
 		if(page <= 0) {
 			this.page = 1;
@@ -22,17 +22,17 @@ public class Pagination {
 		this.page = page;
 	}
 	
-	// page Getter 
+	// 페이지 번호 Getter 
 		public int getPage() {
 			return page;
 		}
 	
-	// PerPageNum Setter
+	// 페이지에 표시할 게시물 개수 Setter
 	public void setPerPageNum(int perPageNum) {
 		this.perPageNum = perPageNum;
 	}
 	
-	// PerPageNum Getter
+	// 페이지에 표시할 게시물 개수 Getter
 	public int getPerPageNum() {
 		return perPageNum;
 	}

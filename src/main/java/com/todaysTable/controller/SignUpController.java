@@ -1,9 +1,6 @@
 package com.todaysTable.controller;
 
-import java.io.FileOutputStream;
-import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todaysTable.dao.SignupMemberDao;
+import com.todaysTable.func.FileUploader;
 import com.todaysTable.service.SignUpService;
 import com.todaysTable.vo.MemberVO;
 
@@ -31,6 +28,9 @@ public class SignUpController {
 	@Autowired
 	private SignUpService service;
 
+	@Autowired
+	FileUploader fileUploader;
+
 	@RequestMapping(value = "signup.do")
 	public String joinView() {
 		return "WEB-INF/views/signup";
@@ -41,11 +41,9 @@ public class SignUpController {
 		return "WEB-INF/views/agreement";
 	}
 
-
 	// 회원가입
 	@PostMapping(value = "signupsubmit.do")
-	public String joinSubmit(MemberVO vo, @RequestParam(value = "file", required = false) MultipartFile file)
-			throws Exception {
+	public String joinSubmit(MemberVO vo, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
 
 		// 생일 yy/mm/dd로 수정
 		String birthdate = vo.getBirthdate();
@@ -54,27 +52,7 @@ public class SignUpController {
 		vo.setBirthdate(birthdate);
 
 		// 파일업로드
-		String location = "C:\\Users\\조유주\\git\\team_todaysTable\\src\\main\\webapp\\resources\\upload\\";
-		FileOutputStream fos = null;
-		System.out.println(file);
-		String fileName = file.getOriginalFilename();
-		UUID uuid = UUID.randomUUID();
-		String resultName = location + uuid.toString() + "_" + fileName;
-		if (fileName.length() > 0) {
-			try {
-				fos = new FileOutputStream(resultName);
-				fos.write(file.getBytes());
-				vo.setProfile_image_path(resultName);// location + fileName
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (fos != null)
-						fos.close();
-				} catch (Exception e2) {
-				}
-			}
-		}
+		fileUploader.multiFileUploader(file, "upload");
 
 		// 회원가입 정보 넣어줌
 		service.memberJoinProcess(vo);
@@ -95,11 +73,10 @@ public class SignUpController {
 		int checkNum = random.nextInt(888888) + 111111;
 		System.out.println("인증번호:" + checkNum);
 		/* 이메일 보내기 */
-		String setFrom = "duddbs1631@gmail.com";
+		String setFrom = "me1411111@gmail.com";
 		String toMail = email;
 		String title = "회원가입 인증 이메일 입니다.";
-		String content = "'오늘의 식탁'을 방문해주셔서 감사합니다^^" + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
-				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		String content = "'오늘의 식탁'을 방문해주셔서 감사합니다^^" + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>" + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();

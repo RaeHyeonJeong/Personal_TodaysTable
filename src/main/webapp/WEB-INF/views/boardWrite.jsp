@@ -39,7 +39,7 @@
 	<section class="py-6 bg-gray-100">
 		<div class="container d-flex justify-content-center">
 			<div class="col-md-7 mb-5 mb-md-0">
-				<form class="form" id="BoardWriteUpdate-form" method="post" action="insertBoard.do" enctype="multipart/form-data">
+				<form class="form" id="BoardWriteUpdate-form" method="post" action="insertBoard.do?board=${board}" enctype="multipart/form-data">
 					<div class="controls">
 						<div class="form-group mb-4">
 							<label class="form-label" for="title">제목</label> <input class="form-control" type="text" name="title" id="title" placeholder="제목을 적어주세요" required="required" style="width: 500px;">
@@ -142,7 +142,7 @@
 			var regex = new RegExp("(.*?)\.(jpg|jpeg|png|gif)$");
 			var maxSize = 14805760; // 10MB
 			var formData = new FormData();
-			
+						
 			// 파일 사이즈 , 파일 확장자 체크
 			function checkExtension(fileName, fileSize){
 				if(fileSize >= maxSize) {
@@ -156,11 +156,11 @@
 				return true;
 			}
 			
-			// 파일 input 태크 변화시 실행
+			// 파일 input 태그 변화시 실행
 			$("#file").on("change", function(e){
 				if(formData.has('uploadFile')){
 					$.ajax({
-						url : 'deleteImgAllAjax.do',
+						url : 'deleteImgAllAjax.do?board=${board}',
 						processData : false,
 						contentType : false,
 						data : formData,
@@ -190,7 +190,7 @@
 				}
 				
 				$.ajax({
-					url : 'uploadImgAjax.do',
+					url : 'uploadImgAjax.do?board=${board}',
 					processData : false,
 					contentType : false,
 					data : formData,

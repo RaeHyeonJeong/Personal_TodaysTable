@@ -10,24 +10,21 @@ import com.todaysTable.vo.MemberVO;
 public class SignupMemberDaoImpl implements SignupMemberDao {
 
 	@Autowired
-	private SqlSessionTemplate st;
+	private SqlSessionTemplate sqlSession;
 
 	@Override
 	public void memberJoin(MemberVO vo) throws Exception {
-		st.insert("memberMapper.memberJoin", vo);
+		sqlSession.insert("memberMapper.memberJoin", vo);
 	}
 
 	@Override
 	public int IdCheck(String id) {
-		return st.selectOne("memberMapper.idCheck", id);
+		return sqlSession.selectOne("memberMapper.idCheck", id);
 	}
 
 	@Override
 	public int NickCheck(String nickname) {
-		return st.selectOne("memberMapper.nickCheck", nickname);
+		return sqlSession.selectOne("memberMapper.nickCheck", nickname);
 	}
-
-	
-	
 
 }
